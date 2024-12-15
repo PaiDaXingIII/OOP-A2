@@ -30,7 +30,7 @@ public class AssignmentTwo {
     }
     public void partFourA(){ 
         //创建操作员对象
-        Employee operator = new Employee("Operator 1", 35, "Male", "0001", "游乐设施操作岗");
+        Employee operator = new Employee("Operator 1", 35, "Male", "0001", "Amusement facility operation position");
 
         //创建rollerCoaster游乐设施对象
         Ride rollerCoaster = new Ride("rollerCoaster", "RC001", operator);
@@ -64,17 +64,17 @@ public class AssignmentTwo {
     } 
     public void partFourB(){ 
         //创建一个Employee对象，用于设置游乐设施的操作员
-        Employee operator = new Employee("Operator 2", 32, "Male", "002", "游乐设施操作岗位");
+        Employee operator = new Employee("Operator 2", 32, "Male", "002", "Amusement facility operation position");
 
         //创建名为thunderstorm的Ride对象
         Ride thunderstorm = new Ride("thunderstorm", "T001", operator);
 
         //创建一些Visitor对象，用于添加到乘坐历史记录
-        Visitor visitor7 = new Visitor("Tom", 26, "Male", "成人票", false);
-        Visitor visitor8 = new Visitor("Sherly", 24, "Female", "成人票", false);
-        Visitor visitor9 = new Visitor("Ben", 30, "Male", "成人票", false);
-        Visitor visitor10 = new Visitor("David", 27, "Male", "成人票", false);
-        Visitor visitor11 = new Visitor("Lee", 23, "Male", "成人票", false);
+        Visitor visitor7 = new Visitor("Tom", 26, "Male", "Adult ticket", false);
+        Visitor visitor8 = new Visitor("Sherly", 24, "Female", "Adult ticket", false);
+        Visitor visitor9 = new Visitor("Ben", 30, "Male", "Adult ticket", false);
+        Visitor visitor10 = new Visitor("David", 27, "Male", "Adult ticket", false);
+        Visitor visitor11 = new Visitor("Lee", 23, "Male", "Adult ticket", false);
 
         //使用创建的方法向收藏（乘坐历史）中添加至少5名访客
         thunderstorm.addVisitorToHistory(visitor7);
