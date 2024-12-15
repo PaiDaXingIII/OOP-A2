@@ -88,7 +88,7 @@ public class AssignmentTwo {
         thunderstorm.addVisitorToHistory(visitor10);
         thunderstorm.addVisitorToHistory(visitor11);
 
-        //检查收藏（乘坐历史）中是否有访客（这里检查visitor8）
+        //检查收藏（乘坐历史）中是否有访客
         thunderstorm.checkVisitorFromHistory(visitor8);
 
         //打印收藏（乘坐历史）中的访客数量
@@ -101,7 +101,7 @@ public class AssignmentTwo {
         //创建一个Employee对象，作为游乐设施的操作员
         Employee operator = new Employee("Operator 1", 30, "Male", "001", "Amusement facility operation position");
 
-        //创建名为rollerCoaster的Ride对象，设定一次最多容纳3名游客（可根据实际情况调整）
+        //创建名为rollerCoaster的Ride对象，设定一次最多容纳3名游客
         Ride rollerCoaster = new Ride("rollerCoaster", "RC001", operator, 3);
 
         //创建一些Visitor对象，用于添加到队列中
@@ -140,7 +140,7 @@ public class AssignmentTwo {
         //打印收藏（乘坐历史记录）中的所有访客
         rollerCoaster.printRideHistory();
 
-        //以下是简单示例如何将乘坐历史记录数据存储为CSV格式（暂未完整实现读写功能，仅展示关键思路）
+        //以下是简单示例如何将乘坐历史记录数据存储为CSV格式
         try {
             File file = new File("ride_history.csv");
             FileWriter writer = new FileWriter(file);
@@ -154,7 +154,7 @@ public class AssignmentTwo {
             System.out.println("Error writing CSV file:" + e.getMessage());
         }
 
-        //以下是简单示例如何从CSV文件读取数据并创建Visitor对象（暂未完整实现，仅展示关键思路）
+        //以下是简单示例如何从CSV文件读取数据并创建Visitor对象
         try {
             File file = new File("ride_history.csv");
             Scanner scanner = new Scanner(file);
