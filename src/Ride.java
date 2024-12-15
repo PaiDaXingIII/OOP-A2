@@ -7,6 +7,8 @@ public class Ride implements RideInterface {
     private Employee rideOperator;
     private Queue<Visitor> waitingQueue;  //存储等待乘坐的游客队列
     private LinkedList<Visitor> rideHistory;  //存储已乘坐过的游客历史记录
+    private int maxRider;  // 一次骑行可以容纳的游客数量
+    private int numOfCycles;  // 游乐设施运行的次数，默认值为0
 
     //默认构造函数
     public Ride() {
@@ -15,6 +17,8 @@ public class Ride implements RideInterface {
         this.rideOperator = null;
         this.waitingQueue = new LinkedList<>();
         this.rideHistory = new LinkedList<>();
+        this.maxRider = 1;  // 默认一次至少容纳1名游客
+        this.numOfCycles = 0;
     }
 
     //带参数的构造函数
@@ -24,6 +28,19 @@ public class Ride implements RideInterface {
         this.rideOperator = rideOperator;
         this.waitingQueue = new LinkedList<>();
         this.rideHistory = new LinkedList<>();
+        this.maxRider = 1;
+        this.numOfCycles = 0;
+    }
+
+    // 带四个参数的构造函数
+    public Ride(String rideName, String rideId, Employee rideOperator, int maxRider) {
+        this.rideName = rideName;
+        this.rideId = rideId;
+        this.rideOperator = rideOperator;
+        this.waitingQueue = new LinkedList<>();
+        this.rideHistory = new LinkedList<>();
+        this.maxRider = maxRider;
+        this.numOfCycles = 0;
     }
 
     //获取游乐设施名称的方法
@@ -64,6 +81,21 @@ public class Ride implements RideInterface {
     //获取已乘坐游客历史记录的方法（外部类可通过此方法获取集合进行操作）
     public LinkedList<Visitor> getRideHistory() {
         return rideHistory;
+    }
+
+    // 获取一次骑行可容纳游客数量的方法
+    public int getMaxRider() {
+        return maxRider;
+    }
+
+    // 设置一次骑行可容纳游客数量的方法
+    public void setMaxRider(int maxRider) {
+        this.maxRider = maxRider;
+    }
+
+    // 获取游乐设施运行次数的方法
+    public int getNumOfCycles() {
+        return numOfCycles;
     }
 
     //实现接口中的addVisitorToQueue方法，添加游客到等待队列
