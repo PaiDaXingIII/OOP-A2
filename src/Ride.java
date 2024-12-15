@@ -1,3 +1,6 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.LinkedList;
@@ -153,7 +156,7 @@ public class Ride implements RideInterface {
                 transferredCount++;
             }
         }
-        System.out.println(" The ride run round is over and will be" + transferredCount + "Visitors were moved from the waiting queue to the ride history. ");
+        System.out.println("The ride run round is over and will be" + transferredCount + "Visitors were moved from the waiting queue to the ride history. ");
     }
 
     //实现接口中的addVisitorToHistory方法，将游客添加到乘坐历史记录
@@ -161,7 +164,7 @@ public class Ride implements RideInterface {
     public void addVisitorToHistory(Visitor visitor) {
         if (visitor!= null) {
             rideHistory.add(visitor);
-            System.out.println(" Successfully bringing visitor" + visitor.getName() + "add to ride history. ");
+            System.out.println("Successfully bringing visitor" + visitor.getName() + "add to ride history. ");
         } else {
             System.out.println("Add visitor to ride history failed, incoming visitor object is empty.");
         }
@@ -195,7 +198,7 @@ public class Ride implements RideInterface {
             System.out.println("Name of visitor:" + v.getName() + ",age:" + v.getAge() + ",gender:" + v.getGender() + ",type of Ticket:" + v.getTicketType() + ",Is it a first visit?:" + v.isFirstVisit());
         }
     }
-    // 实现接口中的exportRideHistory方法，将乘坐历史记录导出到文件
+    //实现接口中的exportRideHistory方法，将乘坐历史记录导出到文件
     @Override
     public void exportRideHistory(String filePath) throws IOException {
         try (FileWriter writer = new FileWriter(filePath)) {
@@ -203,10 +206,46 @@ public class Ride implements RideInterface {
                 String line = visitor.getName() + "," + visitor.getAge() + "," + visitor.getGender() + "," + visitor.getTicketType() + "," + visitor.isFirstVisit();
                 writer.write(line + "\n");
             }
-            System.out.println("乘坐历史记录已成功导出到文件：" + filePath);
+            System.out.println("The ride history has been successfully exported to the file:" + filePath);
         } catch (IOException e) {
-            System.out.println("导出乘坐历史记录到文件时出错，错误信息：" + e.getMessage());
-            throw e; // 重新抛出异常，以便调用者处理
+            System.out.println("Error exporting ride history to file, error message:" + e.getMessage());
+            throw e; //重新抛出异常，以便调用者处理
+        }
+    }
+    //实现接口中的importRideHistory方法，从文件中读取游客信息并添加到乘坐历史记录
+    @Override
+    public void importRideHistory(String filePath) throws IOException {
+        File file = new File(filePath);
+        if (!file.exists()) {
+            System.out.println("The file to be imported does not exist, please check if the file path is correct.");
+            return;
+        }
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = reader.readLine())!= null) {
+                String[] parts = line.split(",");
+                if (parts.length == 5) {
+                    try {
+                        String name = parts[0];
+                        int age = Integer.parseInt(parts[1]);
+                        String gender = parts[2];
+                        String ticketType = parts[3];
+                        boolean firstVisit = Boolean.parseBoolean(parts[4]);
+                        Visitor visitor = new Visitor(name, age, gender, ticketType, firstVisit);
+                        rideHistory.add(visitor);
+                    } catch (NumberFormatException e) {
+                        System.out.println("There is a numerical format error in the tourist information in the parsing file, skipping the current line. Error message:" + e.getMessage());
+                        continue;
+                    }
+                } else {
+                    System.out.println("The data format of a certain line in the file is incorrect, skip the current line.");
+                    continue;
+                }
+            }
+            System.out.println("Successfully imported tourist information from the file into the ride history.");
+        } catch (IOException e) {
+            System.out.println("An error occurred while reading the file, unable to import tourist information. Error message:" + e.getMessage());
+            throw e;
         }
     }
 }
