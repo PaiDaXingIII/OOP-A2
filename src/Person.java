@@ -1,10 +1,11 @@
-public class Person {
+public abstract class Person {
     //添加姓名、年龄、性别作为实例变量
     private String name;
     private int age;
     private String gender;
-    //默认构造函数
-    public Person() {
+   
+    public Person(){
+        
     }
     //带参数的构造函数，用于初始化实例变量
     public Person(String name, int age, String gender) {
