@@ -201,7 +201,8 @@ public class Ride implements RideInterface {
     //实现接口中的exportRideHistory方法，将乘坐历史记录导出到文件
     @Override
     public void exportRideHistory(String filePath) throws IOException {
-        try (FileWriter writer = new FileWriter(filePath)) {
+        File file = new File(filePath);
+        try (FileWriter writer = new FileWriter(file)) {
             for (Visitor visitor : rideHistory) {
                 String line = visitor.getName() + "," + visitor.getAge() + "," + visitor.getGender() + "," + visitor.getTicketType() + "," + visitor.isFirstVisit();
                 writer.write(line + "\n");
@@ -209,10 +210,11 @@ public class Ride implements RideInterface {
             System.out.println("The ride history has been successfully exported to the file:" + filePath);
         } catch (IOException e) {
             System.out.println("Error exporting ride history to file, error message:" + e.getMessage());
-            throw e; //重新抛出异常，以便调用者处理
+            throw e;
         }
     }
-    //实现接口中的importRideHistory方法，从文件中读取游客信息并添加到乘坐历史记录
+
+    // 从文件导入乘坐历史记录的方法（实现接口方法）
     @Override
     public void importRideHistory(String filePath) throws IOException {
         File file = new File(filePath);
@@ -220,6 +222,7 @@ public class Ride implements RideInterface {
             System.out.println("The file to be imported does not exist, please check if the file path is correct.");
             return;
         }
+
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = reader.readLine())!= null) {

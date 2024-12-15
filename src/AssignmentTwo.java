@@ -154,31 +154,46 @@ public class AssignmentTwo {
         //打印收藏（乘坐历史记录）中的所有访客
         rollerCoaster.printRideHistory();
 
-        //以下是简单示例如何将乘坐历史记录数据存储为CSV格式
-        try {
-            File file = new File("ride_history.csv");
-            FileWriter writer = new FileWriter(file);
-            for (Visitor v : rollerCoaster.getRideHistory()) {
-                String line = v.getName() + "," + v.getAge() + "," + v.getGender() + "," + v.getTicketType() + "," + v.isFirstVisit();
-                writer.write(line + "\n");
-            }
-            writer.close();
-            System.out.println("The ride history data has been attempted to write to a CSV file.");
-        } catch (IOException e) {
-            System.out.println("Error writing CSV file:" + e.getMessage());
+        // 以下是简单示例如何将乘坐历史记录数据存储为CSV格式，这里使用try-with-resources自动关闭文件写入流
+    File file = new File("ride_history.csv");
+    try (FileWriter writer = new FileWriter(file)) {
+        for (Visitor v : rollerCoaster.getRideHistory()) {
+            String line = v.getName() + "," + v.getAge() + "," + v.getGender() + "," + v.getTicketType() + "," + v.isFirstVisit();
+            writer.write(line + "\n");
         }
+        System.out.println("The ride history data has been attempted to write to a CSV file.");
+    } catch (IOException e) {
+        System.out.println("Error writing to file: " + e.getMessage());
+    }
 
-        //以下是简单示例如何从CSV文件读取数据并创建Visitor对象
-        try {
-            File file = new File("ride_history.csv");
-            Scanner scanner = new Scanner(file);
-            while (scanner.hasNextLine()) {
+    // 以下是简单示例如何从CSV文件读取数据并创建Visitor对象，这里使用try-with-resources自动关闭文件读取流
+    try (Scanner scanner = new Scanner(file)) {
+        while (scanner.hasNextLine()) {
+            String line = scanner.nextLine();
+            String[] parts = line.split(",");
+            if (parts.length == 5) {
+                try {
+                    String name = parts[0];
+                    int age = Integer.parseInt(parts[1]);
+                    String gender = parts[2];
+                    String ticketType = parts[3];
+                    boolean firstVisit = Boolean.parseBoolean(parts[4]);
+                    Visitor visitor = new Visitor(name, age, gender, ticketType, firstVisit);
+                    // 这里可以根据实际需求对新创建的Visitor对象做进一步处理，比如添加到某个集合等
+                    System.out.println("An attempt has been made to read data from a CSV file and parse it to create Visitor object: " + visitor.getName());
+                } catch (NumberFormatException ex) {
+                    System.out.println("解析文件中游客信息出现数字格式错误，跳过当前行。错误信息：" + ex.getMessage());
+                    continue;
+                }
+            } else {
+                System.out.println("文件中某行数据格式不正确，跳过当前行。");
+                continue;
             }
-            scanner.close();
-            System.out.println("An attempt has been made to read data from a CSV file and parse it.");
-        } catch (IOException e) {
-            System.out.println("Error reading CSV file:" + e.getMessage());
         }
+        System.out.println("An attempt has been made to read data from a CSV file and parse it.");
+    } catch (IOException e) {
+        System.out.println("Error reading file: " + e.getMessage());
+    }
     } 
     public void partSix(){ 
         //创建一个Employee对象，作为游乐设施的操作员
@@ -201,7 +216,7 @@ public class AssignmentTwo {
         rollerCoaster.addVisitorToHistory(visitor5);
 
         //定义要导出文件的路径和文件名
-        String filePath = "ride_history_export.txt";
+        String filePath = "F:\\课\\OOP\\\\A2\\HaoyuRen-A2\\ride_history.csv";
 
         try {
             rollerCoaster.exportRideHistory(filePath);
@@ -218,17 +233,17 @@ public class AssignmentTwo {
         Ride rollerCoaster = new Ride("rollerCoaster", "RC001", operator);
 
         //定义要导入文件的路径和文件名，这里使用之前导出文件时的相对路径，可根据实际情况调整
-        String filePath = "ride_history_export.txt";
+        String filePath = "F:\\课\\OOP\\A2\\HaoyuRen-A2\\ride_history.csv";
 
         try {
             rollerCoaster.importRideHistory(filePath);
-            //打印导入后乘坐历史记录中的游客数量，确认数量是否正确
+        //打印导入后乘坐历史记录中的游客数量，确认数量是否正确
             rollerCoaster.numberOfVisitors();
-            //打印导入后乘坐历史记录中的所有游客信息，确认信息是否正确
+        //打印导入后乘坐历史记录中的所有游客信息，确认信息是否正确
             rollerCoaster.printRideHistory();
         } catch (IOException e) {
             System.out.println("An exception occurred during the import of the ride history file:" + e.getMessage());
-            //可以在这里添加更多的异常处理逻辑，比如记录日志等操作
+        //可以在这里添加更多的异常处理逻辑，比如记录日志等操作
         }
 
     } 
