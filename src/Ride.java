@@ -1,3 +1,5 @@
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -191,6 +193,20 @@ public class Ride implements RideInterface {
         System.out.println("The historical records of visitors who have ridden the ride are as follows:");
         for (Visitor v : rideHistory) {
             System.out.println("Name of visitor:" + v.getName() + ",age:" + v.getAge() + ",gender:" + v.getGender() + ",type of Ticket:" + v.getTicketType() + ",Is it a first visit?:" + v.isFirstVisit());
+        }
+    }
+    // 实现接口中的exportRideHistory方法，将乘坐历史记录导出到文件
+    @Override
+    public void exportRideHistory(String filePath) throws IOException {
+        try (FileWriter writer = new FileWriter(filePath)) {
+            for (Visitor visitor : rideHistory) {
+                String line = visitor.getName() + "," + visitor.getAge() + "," + visitor.getGender() + "," + visitor.getTicketType() + "," + visitor.isFirstVisit();
+                writer.write(line + "\n");
+            }
+            System.out.println("乘坐历史记录已成功导出到文件：" + filePath);
+        } catch (IOException e) {
+            System.out.println("导出乘坐历史记录到文件时出错，错误信息：" + e.getMessage());
+            throw e; // 重新抛出异常，以便调用者处理
         }
     }
 }

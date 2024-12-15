@@ -167,7 +167,35 @@ public class AssignmentTwo {
         }
     } 
     public void partSix(){ 
-    } 
+        //创建一个Employee对象，作为游乐设施的操作员
+        Employee operator = new Employee("Operator1", 30, "Male", "001", "Amusement facility operation position");
+
+        //创建名为rollerCoaster的Ride对象
+        Ride rollerCoaster = new Ride("rollerCoaster", "RC001", operator);
+
+        //创建5个Visitor对象，并添加到乘坐历史记录（LinkedList）中
+        Visitor visitor1 = new Visitor("杰克", 25, "Male", "Adult ticket", false);
+        Visitor visitor2 = new Visitor("莎伦", 28, "Female", "Adult ticket", false);
+        Visitor visitor3 = new Visitor("本尼", 32, "Male", "Adult ticket", false);
+        Visitor visitor4 = new Visitor("利奥", 22, "Male", "Adult ticket", false);
+        Visitor visitor5 = new Visitor("艾丽", 29, "Female", "Adult ticket", false);
+
+        rollerCoaster.addVisitorToHistory(visitor1);
+        rollerCoaster.addVisitorToHistory(visitor2);
+        rollerCoaster.addVisitorToHistory(visitor3);
+        rollerCoaster.addVisitorToHistory(visitor4);
+        rollerCoaster.addVisitorToHistory(visitor5);
+
+        //定义要导出文件的路径和文件名
+        String filePath = "ride_history_export.txt";
+
+        try {
+            rollerCoaster.exportRideHistory(filePath);
+        } catch (IOException e) {
+            System.out.println("An exception occurred while exporting the ride history to a file:" + e.getMessage());
+        //可以在这里添加更多的异常处理逻辑，比如记录日志等操作
+        }
+    }
     public void partSeven(){ 
     } 
 }
